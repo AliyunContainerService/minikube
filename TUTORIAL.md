@@ -6,7 +6,7 @@
 运行：
 
 ```bash
-minikube start --docker-env HTTP_PROXY=http://ip:port --docker-env HTTPS_PROXY=http://port:ip --docker-env no_proxy=localhost,127.0.0.1,10.96.0.0/12,192.168.99.0/24,192.168.39.0/24
+minikube start --docker-env HTTP_PROXY= --docker-env HTTPS_PROXY= --image-mirror-country='cn' --image-repository='registry.cn-hangzhou.aliyuncs.com/google_containers' --iso-url='https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-v1.3.0.iso' --registry-mirror=https://t0pp2aci.mirror.aliyuncs.com
 ```
 
 我们可以继续[hello-minikube](https://kubernetes.io/docs/tutorials/hello-minikube/)的教程了。
