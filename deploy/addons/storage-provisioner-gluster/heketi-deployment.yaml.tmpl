@@ -116,7 +116,7 @@ spec:
     spec:
       serviceAccountName: heketi-service-account
       containers:
-      - image: {{.CustomRegistries.Heketi  | default .ImageRepository | default .Registries.Heketi }}{{.Images.Heketi}}
+      - image: heketi/heketi:latest
         imagePullPolicy: IfNotPresent
         name: heketi
         env:

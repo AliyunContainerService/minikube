@@ -41,8 +41,8 @@ const fileScheme = "file"
 func DefaultISOURLs() []string {
 	v := version.GetISOVersion()
 	return []string{
-		fmt.Sprintf("https://storage.googleapis.com/minikube/iso/minikube-%s.iso", v),
-		fmt.Sprintf("https://github.com/kubernetes/minikube/releases/download/%s/minikube-%s.iso", v, v),
+		// fmt.Sprintf("https://storage.googleapis.com/minikube/iso/minikube-%s.iso", v),
+		// fmt.Sprintf("https://github.com/kubernetes/minikube/releases/download/%s/minikube-%s.iso", v, v),
 		fmt.Sprintf("https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/iso/minikube-%s.iso", v),
 	}
 }
