@@ -18,7 +18,8 @@ package notify
 
 const (
 	// GithubMinikubeReleasesURL is the URL of the minikube github releases JSON file
-	GithubMinikubeReleasesURL = "https://storage.googleapis.com/minikube/releases.json"
+	// GithubMinikubeReleasesURL = "https://storage.googleapis.com/minikube/releases.json"
 	// GithubMinikubeBetaReleasesURL is the URL of the minikube Github beta releases JSON file
 	GithubMinikubeBetaReleasesURL = "https://storage.googleapis.com/minikube/releases-beta.json"
+	GithubMinikubeReleasesURL = "https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases.json"
 )

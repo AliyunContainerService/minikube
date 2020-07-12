@@ -29,7 +29,7 @@ import (
 )
 
 const (
-	downloadURL = "https://storage.googleapis.com/minikube/releases/%s/minikube-%s-%s%s"
+	downloadURL = "https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/%s/minikube-%s-%s%s"
 )
 
 // CalculateSizeInMB returns the number of MB in the human readable string

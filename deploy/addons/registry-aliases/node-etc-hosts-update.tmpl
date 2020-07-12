@@ -17,7 +17,7 @@ spec:
     spec:
       initContainers:
         - name: update
-          image: {{.CustomRegistries.Alpine  | default .ImageRepository | default .Registries.Alpine }}{{.Images.Alpine}}
+          image: alpine:3.11
           volumeMounts:
             - name: etchosts
               mountPath: /host-etc/hosts
@@ -43,7 +43,7 @@ spec:
               echo "Done."
       containers:
         - name: pause-for-update
-          image: {{.CustomRegistries.Pause  | default .ImageRepository | default .Registries.Pause }}{{.Images.Pause}}
+          image: {{default "gcr.io/google_containers" .ImageRepository}}/pause-amd64:3.1
       terminationGracePeriodSeconds: 30
       volumes:
         - name: etchosts

@@ -33,9 +33,9 @@ func TestGetBinaryDownloadURL(t *testing.T) {
 		platform    string
 		expectedURL string
 	}{
-		{"v0.0.1", "linux", "https://storage.googleapis.com/minikube/releases/v0.0.1/minikube-linux-amd64"},
-		{"v0.0.1", "darwin", "https://storage.googleapis.com/minikube/releases/v0.0.1/minikube-darwin-amd64"},
-		{"v0.0.1", "windows", "https://storage.googleapis.com/minikube/releases/v0.0.1/minikube-windows-amd64.exe"},
+		{"v0.0.1", "linux", "https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v0.0.1/minikube-linux-amd64"},
+		{"v0.0.1", "darwin", "https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v0.0.1/minikube-darwin-amd64"},
+		{"v0.0.1", "windows", "https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/releases/v0.0.1/minikube-windows-amd64.exe"},
 	}
 
 	for _, tt := range testData {

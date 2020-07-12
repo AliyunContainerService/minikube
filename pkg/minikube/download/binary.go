@@ -30,7 +30,7 @@ import (
 
 // binaryWithChecksumURL gets the location of a Kubernetes binary
 func binaryWithChecksumURL(binaryName, version, osName, archName string) (string, error) {
-	base := fmt.Sprintf("https://storage.googleapis.com/kubernetes-release/release/%s/bin/%s/%s/%s", version, osName, archName, binaryName)
+	base := fmt.Sprintf("https://kubernetes.oss-cn-hangzhou.aliyuncs.com/kubernetes-release/release/%s/bin/%s/%s/%s", version, osName, archName, binaryName)
 	v, err := semver.Make(version[1:])
 	if err != nil {
 		return "", err

@@ -43,7 +43,7 @@ spec:
         hostPath:
           path: /var/lib/kubelet/device-plugins
       containers:
-      - image: {{.CustomRegistries.NvidiaDevicePlugin  | default .ImageRepository | default .Registries.NvidiaDevicePlugin }}{{.Images.NvidiaDevicePlugin}}
+      - image: nvidia/k8s-device-plugin:1.0.0-beta4
         command: ["/usr/bin/nvidia-device-plugin", "-logtostderr"]
         name: nvidia-gpu-device-plugin
         resources:

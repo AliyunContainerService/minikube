@@ -95,7 +95,7 @@ spec:
       dnsPolicy: ClusterFirst
       containers:
         - name: controller
-          image: {{.CustomRegistries.IngressController  | default .ImageRepository | default .Registries.IngressController }}{{.Images.IngressController}}
+          image: registry.cn-hangzhou.aliyuncs.com/google_containers/nginx-ingress-controller:v0.44.0
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
@@ -238,7 +238,7 @@ spec:
     spec:
       containers:
         - name: create
-          image: {{.CustomRegistries.KubeWebhookCertgenCreate  | default .ImageRepository | default .Registries.KubeWebhookCertgenCreate }}{{.Images.KubeWebhookCertgenCreate}}
+          image: jettech/kube-webhook-certgen:v1.2.2
           imagePullPolicy: IfNotPresent
           args:
             - create
@@ -278,8 +278,8 @@ spec:
     spec:
       containers:
         - name: patch
-          image: {{.CustomRegistries.KubeWebhookCertgenPatch  | default .ImageRepository | default .Registries.KubeWebhookCertgenPatch }}{{.Images.KubeWebhookCertgenPatch}}
-          imagePullPolicy: IfNotPresent
+          image: jettech/kube-webhook-certgen:v1.5.1
+          imagePullPolicy:
           args:
             - patch
             - --webhook-name=ingress-nginx-admission

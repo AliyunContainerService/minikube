@@ -146,9 +146,9 @@ var Addons = map[string]*Addon{
 			"storage-provisioner.yaml",
 			"0640"),
 	}, true, "storage-provisioner", map[string]string{
-		"StorageProvisioner": fmt.Sprintf("k8s-minikube/storage-provisioner:%s", version.GetStorageProvisionerVersion()),
+		"StorageProvisioner": fmt.Sprintf("storage-provisioner:%s", version.GetStorageProvisionerVersion()),
 	}, map[string]string{
-		"StorageProvisioner": "gcr.io",
+		"StorageProvisioner": "registry.cn-hangzhou.aliyuncs.com/google_containers",
 	}),
 	"storage-provisioner-gluster": NewAddon([]*BinAsset{
 		MustBinAsset(
@@ -329,9 +329,9 @@ var Addons = map[string]*Addon{
 			"0640"),
 	}, false, "registry", map[string]string{
 		"Registry":          "registry:2.7.1@sha256:d5459fcb27aecc752520df4b492b08358a1912fcdfa454f7d2101d4b09991daa",
-		"KubeRegistryProxy": "google_containers/kube-registry-proxy:0.4@sha256:1040f25a5273de0d72c54865a8efd47e3292de9fb8e5353e3fa76736b854f2da",
+		"KubeRegistryProxy": "kube-registry-proxy:0.4@sha256:1040f25a5273de0d72c54865a8efd47e3292de9fb8e5353e3fa76736b854f2da",
 	}, map[string]string{
-		"KubeRegistryProxy": "gcr.io",
+		"KubeRegistryProxy": "k8s.gcr.io",
 	}),
 	"registry-creds": NewAddon([]*BinAsset{
 		MustBinAsset(
@@ -371,10 +371,10 @@ var Addons = map[string]*Addon{
 	}, false, "registry-aliases", map[string]string{
 		"CoreDNSPatcher": "rhdevelopers/core-dns-patcher@sha256:9220ff32f690c3d889a52afb59ca6fcbbdbd99e5370550cc6fd249adea8ed0a9",
 		"Alpine":         "alpine:3.11@sha256:0bd0e9e03a022c3b0226667621da84fc9bf562a9056130424b5bfbd8bcb0397f",
-		"Pause":          "google_containers/pause:3.1@sha256:f78411e19d84a252e53bff71a4407a5686c46983a2c2eeed83929b888179acea",
+		"Pause":          "pause:3.1@sha256:f78411e19d84a252e53bff71a4407a5686c46983a2c2eeed83929b888179acea",
 	}, map[string]string{
 		"CoreDNSPatcher": "quay.io",
-		"Pause":          "gcr.io",
+		"Pause":          "k8s.gcr.io",
 	}),
 	"freshpod": NewAddon([]*BinAsset{
 		MustBinAsset(
@@ -383,9 +383,9 @@ var Addons = map[string]*Addon{
 			"freshpod-rc.yaml",
 			"0640"),
 	}, false, "freshpod", map[string]string{
-		"FreshPod": "google-samples/freshpod:v0.0.1@sha256:b9efde5b509da3fd2959519c4147b653d0c5cefe8a00314e2888e35ecbcb46f9",
+		"FreshPod": "freshpod:v0.0.1@sha256:b9efde5b509da3fd2959519c4147b653d0c5cefe8a00314e2888e35ecbcb46f9",
 	}, map[string]string{
-		"FreshPod": "gcr.io",
+		"FreshPod": "registry.cn-hangzhou.aliyuncs.com/google_containers",
 	}),
 	"nvidia-driver-installer": NewAddon([]*BinAsset{
 		MustBinAsset(
@@ -440,9 +440,9 @@ var Addons = map[string]*Addon{
 			constants.GvisorConfigTomlTargetName,
 			"0640"),
 	}, false, "gvisor", map[string]string{
-		"GvisorAddon": "k8s-minikube/gvisor-addon:3@sha256:23eb17d48a66fc2b09c31454fb54ecae520c3e9c9197ef17fcb398b4f31d505a",
+		"GvisorAddon": "gvisor-addon:3@sha256:23eb17d48a66fc2b09c31454fb54ecae520c3e9c9197ef17fcb398b4f31d505a",
 	}, map[string]string{
-		"GvisorAddon": "gcr.io",
+		"GvisorAddon": "k8s.gcr.io",
 	}),
 	"helm-tiller": NewAddon([]*BinAsset{
 		MustBinAsset(
@@ -692,6 +692,7 @@ func GenerateTemplateData(addon *Addon, cfg config.KubernetesConfig, networkInfo
 		CustomRegistries:    make(map[string]string),
 		NetworkInfo:         make(map[string]string),
 	}
+
 	if opts.ImageRepository != "" && !strings.HasSuffix(opts.ImageRepository, "/") {
 		opts.ImageRepository += "/"
 	}
@@ -753,8 +754,19 @@ func GenerateTemplateData(addon *Addon, cfg config.KubernetesConfig, networkInfo
 	}
 
 	for name, image := range opts.Images {
-		if _, ok := opts.Registries[name]; !ok {
+		registry, ok := opts.Registries[name]
+		override := opts.CustomRegistries[name]
+
+		if !ok {
 			opts.Registries[name] = "" // Avoid nil access when rendering
+			// Ignore the Docker Hub images
+			if override == "" {
+				opts.CustomRegistries[name] = "registry.hub.docker.com/"
+			}
+		} else if registry == "k8s.gcr.io" {
+			if override == "" {
+				opts.CustomRegistries[name] = "registry.cn-hangzhou.aliyuncs.com/google_containers/"
+			}
 		}
 
 		if override, ok := opts.CustomRegistries[name]; ok {
