@@ -59,5 +59,7 @@ make checksum
 cp "out/minikube_${DEB_VERSION}-0_amd64.deb" out/minikube_latest_amd64.deb
 cp "out/minikube-${RPM_VERSION}-0.x86_64.rpm" out/minikube-latest.x86_64.rpm
 
+
+export BUCKET=kubernetes/minikube
 ossutil cp -f -r out oss://$BUCKET/releases/$TAGNAME/
 

@@ -68,7 +68,7 @@ func TarballPath(k8sVersion, containerRuntime string) string {
 
 // remoteTarballURL returns the URL for the remote tarball in GCS
 func remoteTarballURL(k8sVersion, containerRuntime string) string {
-	return fmt.Sprintf("http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/%s/%s", PreloadBucket, TarballName(k8sVersion, containerRuntime))
+	return fmt.Sprintf("https://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/%s/%s", PreloadBucket, TarballName(k8sVersion, containerRuntime))
 }
 
 // PreloadExists returns true if there is a preloaded tarball that can be used
