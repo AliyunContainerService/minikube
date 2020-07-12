@@ -17,7 +17,6 @@ limitations under the License.
 package download
 
 import (
-	"context"
 	"crypto/md5"
 	"fmt"
 	"io/ioutil"
@@ -25,9 +24,6 @@ import (
 	"os"
 	"path/filepath"
 	"runtime"
-
-	"cloud.google.com/go/storage"
-	"google.golang.org/api/option"
 
 	"github.com/golang/glog"
 	"github.com/pkg/errors"
@@ -72,7 +68,7 @@ func TarballPath(k8sVersion, containerRuntime string) string {
 
 // remoteTarballURL returns the URL for the remote tarball in GCS
 func remoteTarballURL(k8sVersion, containerRuntime string) string {
-	return fmt.Sprintf("https://storage.googleapis.com/%s/%s", PreloadBucket, TarballName(k8sVersion, containerRuntime))
+	return fmt.Sprintf("http://kubernetes.oss-cn-hangzhou.aliyuncs.com/minikube/%s/%s", PreloadBucket, TarballName(k8sVersion, containerRuntime))
 }
 
 // PreloadExists returns true if there is a preloaded tarball that can be used
@@ -143,6 +139,7 @@ func Preload(k8sVersion, containerRuntime string) error {
 		return errors.Wrapf(err, "download failed: %s", url)
 	}
 
+	/*
 	if err := saveChecksumFile(k8sVersion, containerRuntime); err != nil {
 		return errors.Wrap(err, "saving checksum file")
 	}
@@ -150,10 +147,12 @@ func Preload(k8sVersion, containerRuntime string) error {
 	if err := verifyChecksum(k8sVersion, containerRuntime, targetPath); err != nil {
 		return errors.Wrap(err, "verify")
 	}
+	*/
 
 	return nil
 }
 
+/*
 func saveChecksumFile(k8sVersion, containerRuntime string) error {
 	glog.Infof("saving checksum for %s ...", TarballName(k8sVersion, containerRuntime))
 	ctx := context.Background()
@@ -168,6 +167,7 @@ func saveChecksumFile(k8sVersion, containerRuntime string) error {
 	checksum := attrs.MD5
 	return ioutil.WriteFile(PreloadChecksumPath(k8sVersion, containerRuntime), checksum, 0644)
 }
+*/
 
 // verifyChecksum returns true if the checksum of the local binary matches
 // the checksum of the remote binary
