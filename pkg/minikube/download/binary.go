@@ -37,9 +37,9 @@ func binaryWithChecksumURL(binaryName, version, osName, archName string) (string
 	}
 
 	if v.GTE(semver.MustParse("1.17.0")) {
-		return fmt.Sprintf("%s.sha256", base), nil
+		return fmt.Sprintf("%s?checksum=file:%s.sha256", base, base), nil
 	}
-	return fmt.Sprintf("%s.sha1", base), nil
+	return fmt.Sprintf("%s?checksum=file:%s.sha1", base, base), nil
 }
 
 // Binary will download a binary onto the host
