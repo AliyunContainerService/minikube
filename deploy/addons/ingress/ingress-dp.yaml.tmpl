@@ -49,7 +49,7 @@ spec:
       serviceAccountName: ingress-nginx
       containers:
         - name: controller
-          image: {{default "us.gcr.io/k8s-artifacts-prod/ingress-nginx" .ImageRepository}}/controller:v0.40.2
+          image: registry.cn-hangzhou.aliyuncs.com/google_containers/nginx-ingress-controller:v0.40.2
           imagePullPolicy: IfNotPresent
           lifecycle:
             preStop:
