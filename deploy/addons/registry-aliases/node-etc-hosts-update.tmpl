@@ -17,7 +17,7 @@ spec:
     spec:
       initContainers:
         - name: update
-          image: {{default "registry.hub.docker.com/library" .ImageRepository}}/alpine:3.11
+          image: alpine:3.11
           volumeMounts:
             - name: etchosts
               mountPath: /host-etc/hosts

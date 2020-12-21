@@ -68,7 +68,7 @@ spec:
       serviceAccountName: minikube-gcp-auth-certs
       containers:
         - name: create
-          image: {{default "jettech" .ImageRepository}}/kube-webhook-certgen:v1.3.0
+          image: jettech/kube-webhook-certgen:v1.3.0
           imagePullPolicy: IfNotPresent
           args:
             - create
@@ -127,7 +127,7 @@ spec:
       serviceAccountName: minikube-gcp-auth-certs
       containers:
         - name: patch
-          image: {{default "jettech" .ImageRepository}}/kube-webhook-certgen:v1.3.0
+          image: jettech/kube-webhook-certgen:v1.3.0
           imagePullPolicy: IfNotPresent
           args:
             - patch
