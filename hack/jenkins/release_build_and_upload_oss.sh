@@ -63,3 +63,6 @@ cp "out/minikube-${RPM_VERSION}-0.x86_64.rpm" out/minikube-latest.x86_64.rpm
 export BUCKET=kubernetes/minikube
 ossutil cp -f -r out oss://$BUCKET/releases/$TAGNAME/
 
+wget https://storage.googleapis.com/minikube/releases.json
+ossutil cp -f releases.json oss://$BUCKET/releases.json
+rm releases.json
