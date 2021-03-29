@@ -714,6 +714,11 @@ func GenerateTemplateData(addon *Addon, cfg config.KubernetesConfig) interface{}
 	for name, image := range opts.Images {
 		if _, ok := opts.Registries[name]; !ok {
 			opts.Registries[name] = "" // Avoid nil access when rendering
+			// Ignore the Docker Hub images
+			override := opts.CustomRegistries[name]
+			if override == "" {
+				opts.CustomRegistries[name] = "registry.hub.docker.com/"
+			}
 		}
 
 		if override, ok := opts.CustomRegistries[name]; ok {
